@@ -1,7 +1,11 @@
+using Contracts;
 using Microsoft.AspNetCore.Cors.Infrastructure;
+using NLog;
 using ProjectManagement.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
+
+LogManager.LoadConfiguration(String.Concat(Directory.GetCurrentDirectory(),"/NLog.config"));
 
 // Add services to the container.
 
@@ -12,6 +16,10 @@ builder.Services.AddSwaggerGen();
 
 //Cors konfigürasyona ekleniyor
 builder.Services.ConfigureCors(); // ServicesExtensions içinde yazdýðýmýz metod
+
+builder.Services.ConfigureLoggerManager();
+
+
 
 var app = builder.Build();
 
