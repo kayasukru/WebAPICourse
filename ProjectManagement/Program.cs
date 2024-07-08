@@ -19,7 +19,7 @@ builder.Services.ConfigureCors(); // ServicesExtensions içinde yazdýðýmýz metod
 
 builder.Services.ConfigureLoggerManager();
 
-
+builder.Services.ConfigureSqlContext(builder.Configuration);
 
 var app = builder.Build();
 
