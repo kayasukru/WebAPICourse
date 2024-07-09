@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ProjectManagement.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateWebAPICourseDb : Migration
+    public partial class SeedData : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,8 +30,7 @@ namespace ProjectManagement.Migrations
                 name: "Emplloyees",
                 columns: table => new
                 {
-                    EmployeeId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EmployeeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Age = table.Column<int>(type: "int", nullable: true),
@@ -47,6 +46,16 @@ namespace ProjectManagement.Migrations
                         principalTable: "Projects",
                         principalColumn: "ProjectId");
                 });
+
+            migrationBuilder.InsertData(
+                table: "Projects",
+                columns: new[] { "ProjectId", "Description", "Field", "ImageUrl", "Name" },
+                values: new object[] { new Guid("1752e9e5-de76-49f5-b27e-eca83eb6685a"), "Web Uygulama Arayüzü Programlama", "Computer Science", null, "ASP.NET Core Web API Project" });
+
+            migrationBuilder.InsertData(
+                table: "Emplloyees",
+                columns: new[] { "EmployeeId", "Age", "FirstName", "LastName", "Position", "ProjectId" },
+                values: new object[] { new Guid("2fbfe11d-b744-4269-83d7-dd0b5b23e941"), 57, "Şükrü", "Kaya", "Senior Develpoer", new Guid("1752e9e5-de76-49f5-b27e-eca83eb6685a") });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Emplloyees_ProjectId",

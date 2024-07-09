@@ -1,6 +1,5 @@
 ﻿using Contracts;
 using Entities.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ProjectManagement.Controllers
@@ -13,9 +12,12 @@ namespace ProjectManagement.Controllers
         private List<Project> _projectList;
 
         private ILoggerManager _logger;
-        public ProjectsController(ILoggerManager logger)
+
+        private IRepositoryManager _repository;
+        public ProjectsController(ILoggerManager logger, IRepositoryManager repository)
         {
             _logger = logger;
+            _repository = repository;
 
             _projectList = new List<Project>
             {
@@ -36,8 +38,10 @@ namespace ProjectManagement.Controllers
                 int b = 0;
                 int c = a / b;
                 */
+
                 _logger.LogInfo("Projects.Get() has been run. ");
-                return Ok(_projectList);
+                var list = _repository.Project.GetAllProjects(false);
+                return Ok(list);
             }
             catch (Exception ex)
             {

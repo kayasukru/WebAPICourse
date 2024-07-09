@@ -12,8 +12,8 @@ using Repository;
 namespace ProjectManagement.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20240708155654_CreateWebAPICourseDb")]
-    partial class CreateWebAPICourseDb
+    [Migration("20240709094627_SeedData")]
+    partial class SeedData
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,12 +27,10 @@ namespace ProjectManagement.Migrations
 
             modelBuilder.Entity("Entities.Models.Employee", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("uniqueidentifier")
                         .HasColumnName("EmployeeId");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("Age")
                         .HasColumnType("int");
@@ -56,6 +54,17 @@ namespace ProjectManagement.Migrations
                     b.HasIndex("ProjectId");
 
                     b.ToTable("Emplloyees");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("2fbfe11d-b744-4269-83d7-dd0b5b23e941"),
+                            Age = 57,
+                            FirstName = "Şükrü",
+                            LastName = "Kaya",
+                            Position = "Senior Develpoer",
+                            ProjectId = new Guid("1752e9e5-de76-49f5-b27e-eca83eb6685a")
+                        });
                 });
 
             modelBuilder.Entity("Entities.Models.Project", b =>
@@ -82,6 +91,15 @@ namespace ProjectManagement.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Projects");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("1752e9e5-de76-49f5-b27e-eca83eb6685a"),
+                            Description = "Web Uygulama Arayüzü Programlama",
+                            Field = "Computer Science",
+                            Name = "ASP.NET Core Web API Project"
+                        });
                 });
 
             modelBuilder.Entity("Entities.Models.Employee", b =>
