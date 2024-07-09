@@ -32,5 +32,19 @@ namespace ProjectManagement.Presentation.Controllers
                 return StatusCode(500, "Internal Server Error!");
             }
         }
+
+        [HttpGet("{id}")]
+        public IActionResult GetOneProjectById(Guid id)
+        {
+            try
+            {
+                var project = _service.ProjectService.GetOneProjectById(id, false);
+                return Ok(project);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
     }
 }

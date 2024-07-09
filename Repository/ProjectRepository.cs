@@ -23,7 +23,7 @@ namespace Repository
             .OrderBy(p => p.Name)
             .ToList();
 
-        public Project GetProject(Guid id, bool trackChanges) =>
+        public Project GetOneProjectById(Guid id, bool trackChanges) =>
             FindByCondition(p => p.Id.Equals(id), trackChanges)
             .SingleOrDefault();
     }
