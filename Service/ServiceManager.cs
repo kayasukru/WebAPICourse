@@ -1,4 +1,5 @@
-﻿using Contracts;
+﻿using AutoMapper;
+using Contracts;
 using Service.Contracts;
 using System;
 using System.Collections.Generic;
@@ -13,13 +14,13 @@ namespace Service
         private readonly Lazy<IProjectService> _projectService;
         private readonly Lazy<IEmployeeService> _employeeService;
 
-        public ServiceManager(IRepositoryManager repository, ILoggerManager logger)
+        public ServiceManager(IRepositoryManager repository, ILoggerManager logger, IMapper mapper)
         {
             _projectService = 
-                new Lazy<IProjectService>( () => new ProjectService(repository, logger) );
+                new Lazy<IProjectService>( () => new ProjectService(repository, logger, mapper) );
 
             _employeeService = 
-                new Lazy<IEmployeeService>( () => new EmployeeService(repository, logger) );
+                new Lazy<IEmployeeService>( () => new EmployeeService(repository, logger, mapper) );
         }
         public IProjectService ProjectService => _projectService.Value;
         public IEmployeeService EmployeeService => _employeeService.Value;

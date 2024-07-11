@@ -1,4 +1,5 @@
 ﻿using Entities.Models;
+using Shared.DataTransferObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Service.Contracts
 {
     public interface IEmployeeService
     {
-        IEnumerable<Employee> GetAllEmployeesByProjectId(Guid projectId, bool trackChanges);
-        Employee GetOneEmployeeByProjectId(Guid projectId, Guid employeeId, bool trackChanges);
+        IEnumerable<EmployeeDto> GetAllEmployeesByProjectId(Guid projectId, bool trackChanges);
+        EmployeeDto GetOneEmployeeByProjectId(Guid projectId, Guid employeeId, bool trackChanges);
     }
 }
