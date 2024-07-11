@@ -1,0 +1,12 @@
+﻿namespace Shared.DataTransferObjects
+{
+    //[Serializable]
+    public record EmployeeDto
+    {
+        public Guid Id { get; init; }
+        public string FirstName { get; init; }
+        public string LastName { get; init; }
+        public int Age { get; init; }
+        public string Position { get; init; }
+    }
+}

@@ -29,6 +29,7 @@ builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddControllers(config =>
 {
     config.RespectBrowserAcceptHeader = true;
+    config.ReturnHttpNotAcceptable = true; //406 farklý bir formatta talep geldiðinde 406  hatasý alýnýr
 })
     .AddXmlDataContractSerializerFormatters() // xml formatýnda da çýktý saðlar
     .AddApplicationPart(typeof(ProjectManagement.Presentation.AssemplyReference).Assembly);

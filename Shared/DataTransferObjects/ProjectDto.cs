@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace Shared.DataTransferObjects
 {
-    public record ProjectDto(Guid Id, string Name, string Description, string Field);
-    public record EmployeeDto(Guid Id, string FirstName, string LastName, int Age, string Position);
+    //[Serializable]
+    public record ProjectDto
+    {
+        public Guid Id { get; init; }
+        public string name { get; init; }
+        public string description { get; init; }
+        public string Field { get; init; }
+    };
 }
