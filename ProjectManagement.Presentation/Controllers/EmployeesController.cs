@@ -28,18 +28,20 @@ namespace ProjectManagement.Presentation.Controllers
             return Ok(employeeList);
         }
 
-        [HttpGet("{id:guid}")]
+        [HttpGet("{id:guid}", Name ="GetOneEmployeeByProjectIdAndId")]
         public IActionResult GetOneEmployeeByProjectId(Guid projectId, Guid id)
         {
             var employee = _service.EmployeeService.GetOneEmployeeByProjectId(projectId, id, false);
             return Ok(employee);
         }
 
-        //[HttpPost]
-        //public IActionResult CreateOneEmployee([FromBody] EmployeeDtoForCreation employeeDto)
-        //{
-        //    Employee employee = _service.EmployeeService.CreateOneEmployee(employeeDto);
-        //}
+        [HttpPost]
+        public IActionResult CreateOneEmployeeByProjectId(Guid projectId, [FromBody]EmployeeDtoForCreation employeeDto)
+        {
+            EmployeeDto employee = _service.EmployeeService.CreateOneEmployeeByProjectId(projectId, employeeDto, true);
+
+            return CreatedAtRoute("GetOneEmployeeByProjectIdAndId", new { projectId, id = employee.Id }, employee);
+        }
 
     }
 }
