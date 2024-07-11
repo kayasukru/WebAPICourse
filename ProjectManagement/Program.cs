@@ -25,7 +25,12 @@ builder.Services.ConfigureServiceManager();
 
 builder.Services.AddAutoMapper(typeof(Program));
 
-builder.Services.AddControllers()
+
+builder.Services.AddControllers(config =>
+{
+    config.RespectBrowserAcceptHeader = true;
+})
+    .AddXmlDataContractSerializerFormatters() // xml formatýnda da çýktý saðlar
     .AddApplicationPart(typeof(ProjectManagement.Presentation.AssemplyReference).Assembly);
 
 

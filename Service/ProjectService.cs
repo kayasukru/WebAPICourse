@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Contracts;
+using Entities.Exceptions;
 using Entities.Models;
 using Service.Contracts;
 using Shared.DataTransferObjects;
@@ -10,7 +11,6 @@ namespace Service
     {
         private readonly IRepositoryManager _repository;
         private readonly ILoggerManager _logger;
-
         private readonly IMapper _mapper;
 
         public ProjectService(IRepositoryManager repository, ILoggerManager logger, IMapper mapper)
@@ -30,6 +30,10 @@ namespace Service
         public ProjectDto GetOneProjectById(Guid id, bool trackChanges)
         {
             var project = _repository.Project.GetOneProjectById(id, trackChanges);
+            if (project is null)
+            {
+                throw new ProjectNotFoundException(id);
+            }
             var projectDto = _mapper.Map<ProjectDto>(project);
             return projectDto;
         }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Contracts;
+using Entities.Exceptions;
 using Entities.Models;
 using Service.Contracts;
 using Shared.DataTransferObjects;
@@ -27,32 +28,35 @@ namespace Service
 
         public IEnumerable<EmployeeDto> GetAllEmployeesByProjectId(Guid projectId, bool trackChanges)
         {
-            try
-            {
-                var employeeList = _repository.Employee.GetEmployeesByProjectId(projectId, trackChanges);
-                var employeeDtos = _mapper.Map<IEnumerable<EmployeeDto>>(employeeList);
-                return employeeDtos;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("EmployeeService.GetAllEmployeesByProjectId : " + ex.Message);
-                throw;
-            }
+            CheckProjectExists(projectId);
+
+            var employeeList = _repository.Employee.GetEmployeesByProjectId(projectId, trackChanges);
+            var employeeDtos = _mapper.Map<IEnumerable<EmployeeDto>>(employeeList);
+            return employeeDtos;
         }
 
         public EmployeeDto GetOneEmployeeByProjectId(Guid projectId, Guid employeeId, bool trackChanges)
         {
-            try
+            CheckProjectExists(projectId);
+
+            var employee = _repository.Employee.GetEmployeeByProjectId(projectId, employeeId, trackChanges);
+            if (employee is null)
             {
-                var employee = _repository.Employee.GetEmployeeByProjectId(projectId, employeeId, trackChanges);
-                var employeeDto = _mapper.Map<EmployeeDto>(employee);
-                return employeeDto;
+                throw new EmployeeNotFoundException(employeeId);
             }
-            catch (Exception ex)
+
+            var employeeDto = _mapper.Map<EmployeeDto>(employee);
+            return employeeDto;
+        }
+
+        private void CheckProjectExists(Guid projectId)
+        {
+            var project = _repository.Project.GetOneProjectById(projectId, trackChanges: false);
+            if (project is null)
             {
-                _logger.LogError("EmployeeService.GetOneEmployeeByProjectId : " + ex.Message);
-                throw;
+                throw new ProjectNotFoundException(projectId);
             }
+
         }
     }
 }
