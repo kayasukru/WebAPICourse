@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Entities.Models;
+using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
+using Shared.DataTransferObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,12 +28,20 @@ namespace ProjectManagement.Presentation.Controllers
             return Ok(projects);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name ="ProjectById")]
         public IActionResult GetOneProjectById(Guid id)
         {
             //throw new Exception("Exception ...");
             var project = _service.ProjectService.GetOneProjectById(id, false);
             return Ok(project);
         }
+
+        [HttpPost] // post işlemlerinde 201 : CREATED çalışır
+        public IActionResult CreateOneProject([FromBody] ProjectDtoForCreation projectDto)
+        {
+            var project = _service.ProjectService.CreateOneProject(projectDto);
+            return CreatedAtRoute("ProjectById", new { id = project.Id }, project);
+        }
+
     }
 }

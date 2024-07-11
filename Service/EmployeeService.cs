@@ -26,6 +26,18 @@ namespace Service
             _mapper = mapper;
         }
 
+        public Employee CreateOneEmployee(EmployeeDtoForCreation employeeDto)
+        {
+            // Dto -> Entity
+            var entity = _mapper.Map<Employee>(employeeDto);
+
+            // Repo -> Save
+            //_repository.Employee.CreateEmployeeForProject(projectId, entity);
+            //_repository.Save();
+
+            return entity;
+        }
+
         public IEnumerable<EmployeeDto> GetAllEmployeesByProjectId(Guid projectId, bool trackChanges)
         {
             CheckProjectExists(projectId);

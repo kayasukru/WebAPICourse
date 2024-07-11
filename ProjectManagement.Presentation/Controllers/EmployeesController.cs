@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Entities.Models;
+using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
+using Shared.DataTransferObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,5 +34,12 @@ namespace ProjectManagement.Presentation.Controllers
             var employee = _service.EmployeeService.GetOneEmployeeByProjectId(projectId, id, false);
             return Ok(employee);
         }
+
+        //[HttpPost]
+        //public IActionResult CreateOneEmployee([FromBody] EmployeeDtoForCreation employeeDto)
+        //{
+        //    Employee employee = _service.EmployeeService.CreateOneEmployee(employeeDto);
+        //}
+
     }
 }
